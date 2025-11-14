@@ -12,29 +12,59 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    /* Mejor soporte en iPhone */
     height: 100dvh;
-
     background-color: #fce4ec;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     margin: 0;
 }
 
-#corazon {
-    font-size: 180px; /* Se ajusta para pantallas pequeñas */
+/* TAP ME MUCHO MÁS ARRIBA (3 CM APROX) */
+#tapme {
+    font-size: 28px;
+    font-weight: bold;
+    color: #880e4f;
+    margin-bottom: 90px;   /* SUBIDO MÁS ARRIBA (ANTES 40px) */
+    text-align: center;
+}
+
+/* --- PRIMER CORAZÓN ORIGINAL --- */
+.corazon {
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    position: relative;
+    transform: rotate(-45deg);
     cursor: pointer;
-    user-select: none;
     transition: transform 0.2s;
-    touch-action: manipulation; /* Para que responda mejor en iPhone */
 }
 
-#corazon:active {
-    transform: scale(1.15);
+.corazon:before,
+.corazon:after {
+    content: "";
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
 }
 
+.corazon:before {
+    top: -75px;
+    left: 0;
+}
+
+.corazon:after {
+    left: 75px;
+    top: 0;
+}
+
+.corazon:active {
+    transform: scale(1.1) rotate(-45deg);
+}
+
+/* --- FRASE --- */
 #frase {
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: 24px;
     color: #880e4f;
     text-align: center;
@@ -52,7 +82,14 @@ body {
 </head>
 
 <body>
-<div id="corazon">❤️</div>
+
+<!-- TAP ME MÁS ARRIBA -->
+<div id="tapme">TAP ME</div>
+
+<!-- CORAZÓN ORIGINAL -->
+<div id="corazon" class="corazon"></div>
+
+<!-- FRASE -->
 <div id="frase">Presiona el corazón para ver una frase</div>
 
 <script>
@@ -71,8 +108,7 @@ const fraseDiv = document.getElementById("frase");
 corazon.addEventListener("click", () => {
     fraseDiv.classList.remove("animar");
 
-    // Forzar “reflow” compatible con iPhone
-    void fraseDiv.offsetHeight;
+    void fraseDiv.offsetHeight; // Fix para iPhone
 
     fraseDiv.textContent = frases[indiceActual];
     fraseDiv.classList.add("animar");
@@ -83,4 +119,3 @@ corazon.addEventListener("click", () => {
 
 </body>
 </html>
-
